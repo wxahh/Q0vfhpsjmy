@@ -33,7 +33,7 @@ def start_server():
     app.run(host='0.0.0.0', port=port)
 
 def keep_awake():
-    url = "https://tomacoinmy.onrender.com"
+    url = "https://tomacoinmy-17tp.onrender.com"
     while True:
         try:
             response = requests.get(url)
