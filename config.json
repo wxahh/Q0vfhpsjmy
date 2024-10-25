@@ -1,10 +1,10 @@
 {
-    "interval": 4,
+    "interval": 10,
     "sleep": 300,
     "energy_limit": 10,
     "tap_range": {
         "start": 250,
-        "end": 300
+        "end": 400
     },
     "auto_upgrade": {
         "multivalue": true,
