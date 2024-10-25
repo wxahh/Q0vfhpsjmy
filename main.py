@@ -28,14 +28,13 @@ def keep_awake():
             print(f"Failed to ping {url}: {e}")
         time.sleep(13 * 60)
 
-if __name__ == "__main__":
-    threading.Thread(target=start_server, daemon=True).start()
-    threading.Thread(target=keep_awake, daemon=True).start()
 
 async def main():
     await process()
 
 
 if __name__ == '__main__':
+    threading.Thread(target=start_server, daemon=True).start()
+    threading.Thread(target=keep_awake, daemon=True).start()
     with suppress(KeyboardInterrupt):
         asyncio.run(main())
