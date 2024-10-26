@@ -34,9 +34,9 @@ def keep_awake():
             print(f"Failed to ping {url}: {e}")
         time.sleep(11 * 60)
 
-if __name__ == "__main__":
-    threading.Thread(target=start_server, daemon=True).start()
-    threading.Thread(target=keep_awake, daemon=True).start()
+# if __name__ == "__main__":
+#     threading.Thread(target=start_server, daemon=True).start()
+#     threading.Thread(target=keep_awake, daemon=True).start()
 
 init(autoreset=True)
 
@@ -386,6 +386,8 @@ class Bot:
 
 
 if __name__ == "__main__":
+    threading.Thread(target=start_server, daemon=True).start()
+    threading.Thread(target=keep_awake, daemon=True).start()
     try:
         app = Bot()
         app.main()
