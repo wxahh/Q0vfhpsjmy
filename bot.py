@@ -32,7 +32,7 @@ def keep_awake():
             print(f"Pinged {url}, status code: {response.status_code}")
         except Exception as e:
             print(f"Failed to ping {url}: {e}")
-        time.sleep(11 * 60)
+        time.sleep(5 * 60)
 
 # if __name__ == "__main__":
 #     threading.Thread(target=start_server, daemon=True).start()
