@@ -373,9 +373,15 @@ class Bot:
                 else:
                     res = requests.post(url, headers=headers, data=data)
 
-                # Cek status kode HTTP
+                    # Проверка статус кода HTTP
                 if res.status_code != 200:
                     self.log(f"{merah}HTTP Error: {res.status_code} - {res.text}")
+                    return res
+
+               
+                # Проверка на пустой ответ
+                if not res.text:
+                    self.log(f"{merah}Received empty response from {url}!")
                     return res
 
                 return res
