@@ -3,8 +3,8 @@
     "sleep": 300,
     "energy_limit": 10,
     "tap_range": {
-        "start": 250,
-        "end": 500
+        "start": 100,
+        "end": 300
     },
     "auto_upgrade": {
         "multivalue": true,
