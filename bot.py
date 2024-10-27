@@ -10,6 +10,7 @@ import argparse
 import aiofiles
 import aiofiles.os
 import time
+import requests
 from base64 import b64decode
 import aiofiles.ospath
 from colorama import init, Fore, Style
