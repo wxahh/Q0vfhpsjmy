@@ -134,10 +134,12 @@ class Bot:
                 tokens = json.loads(open(self.token_file).read())
                 token = tokens.get(self.id)
                 _data = self.convert(parser)
-                if not token:
+
+                if not token or self.is_expired(token):
                     token = self.login(_data)
-                if self.is_expired(token):
-                    token = self.login(_data)
+                if isinstance(token, bool) and not token:
+                    self.log(f"{merah}Failed to obtain a valid token, skipping this account.")
+                    continue  # Переход к следующей строке данных
                 self.base_headers["token"] = token
                 while True:
                     self.user_info()
