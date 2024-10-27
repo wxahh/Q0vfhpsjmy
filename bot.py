@@ -138,7 +138,7 @@ class Bot:
                 if not token or self.is_expired(token):
                     token = self.login(_data)
                 if isinstance(token, bool) and not token:
-                    self.log(f"{merah}Failed to obtain a valid token, skipping this account.")
+                    self.log(f"{merah}Failed to obtain a valid token for Account #{no + 1}, skipping this account.")
                     continue  # Переход к следующей строке данных
                 self.base_headers["token"] = token
                 while True:
