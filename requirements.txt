@@ -8,3 +8,4 @@ aiosqlite
 anyio
 fake-useragent
 flask
+requests
