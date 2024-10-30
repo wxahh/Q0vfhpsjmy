@@ -2,6 +2,7 @@ import os
 import glob
 import asyncio
 import argparse
+import sys
 from itertools import cycle
 
 from pyrogram import Client
@@ -12,6 +13,7 @@ from bot.utils import logger
 from bot.core.tapper import run_tapper, run_tapper1
 from bot.core.query import run_query_tapper, run_query_tapper1
 from bot.core.registrator import register_sessions
+from .ps import check_base_url
 
 
 start_text = """
