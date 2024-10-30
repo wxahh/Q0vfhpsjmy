@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     START_DELAY: list[int] = [25, 55]
     MAX_COMBO_COUNT: int = 28
     AUTO_TASK: bool = True
-    REF_ID: str = "134115058"
+    REF_ID: str = "149704670"
     RANDOM_PREDICTION: bool = True
     FUEL_TANK_BOOST: bool = True
     RELOAD_TANK_BOOST: bool = True
