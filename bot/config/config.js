@@ -1,13 +1,8 @@
 require("dotenv").config();
 const _isArray = require("../utils/_isArray");
 const settings = {
-  API_ID:
-    process.env.API_ID && /^\d+$/.test(process.env.API_ID)
-      ? parseInt(process.env.API_ID)
-      : process.env.API_ID && !/^\d+$/.test(process.env.API_ID)
-      ? "N/A"
-      : undefined,
-  API_HASH: process.env.API_HASH || "",
+  API_ID: 29928597,
+  API_HASH: 'a9d52a67363af8e4a39972f26f5b17f4',
 
   AUTO_APPLY_TURBO: process.env.AUTO_APPLY_TURBO
     ? process.env.AUTO_APPLY_TURBO.toLowerCase() === "true"
@@ -111,7 +106,7 @@ const settings = {
 
   USE_QUERY_ID: process.env.USE_QUERY_ID
     ? process.env.USE_QUERY_ID.toLowerCase() === "true"
-    : false,
+    : true,
 
   USE_PROXY_FROM_TXT_FILE: process.env.USE_PROXY_FROM_TXT_FILE
     ? process.env.USE_PROXY_FROM_TXT_FILE.toLowerCase() === "true"
