@@ -4,7 +4,8 @@ const { version, name } = require("./package.json");
 const _ = require("lodash");
 const _fdy = require("fdy-scraping");
 const express = require('express');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
 
 const app = express();
 const PORT = 3000;
