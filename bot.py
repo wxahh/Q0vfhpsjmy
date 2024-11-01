@@ -44,7 +44,7 @@ def start_server():
     app.run(host='0.0.0.0', port=port)
 
 def keep_awake():
-    url = "https://bluuumxh888eww.onrender.com"
+    url = "https://bluuumxh888eww-t0gt.onrender.com"
     while True:
         try:
             response = requests.get(url)
