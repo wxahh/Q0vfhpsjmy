@@ -6,7 +6,7 @@
 
 # 🐾 AUTO FARM FOR PAWS 🐾
 
-> [!ATTENTION]
+> [!WARNING]
 > As a payment for this script I take a 20 - 30% of your referrals.
 
 > [!WARNING]
