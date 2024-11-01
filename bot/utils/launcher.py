@@ -21,6 +21,11 @@ My other bots:
 💩Boinkers - https://github.com/YarmolenkoD/boinkers
 🎨Notpixel - https://github.com/YarmolenkoD/notpixel
 
+🚀 HIDDEN CODE MARKET 🚀
+
+🐾 PAWS WALLET CONNECTOR - https://t.me/hcmarket_bot?start=referral_355876562-project_1016
+🎨 NOTPIXEL PREMIUM - https://t.me/hcmarket_bot?start=referral_355876562-project_1015
+
 Select an action:
 
     1. Run script 🐾

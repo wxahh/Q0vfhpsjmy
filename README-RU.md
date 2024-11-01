@@ -12,6 +12,13 @@
 > [!WARNING]
 > Я не несу ответственности за ваш аккаунт. Пожалуйста, учитывайте потенциальные риски перед использованием этого бота.
 
+## [HIDDEN CODE MARKET](https://t.me/hcmarket_bot?start=referral_355876562)
+
+### [PAWS WALLET CONNECTOR](https://t.me/hcmarket_bot?start=referral_355876562-project_1016)
+### [PREMIUM NOTPIXEL](https://t.me/hcmarket_bot?start=referral_355876562-project_1015)
+### [BLUM WALLET CONNECTOR](https://t.me/hcmarket_bot?start=referral_355876562-project_1002)
+### [TELEGRAM WARNING UP](https://t.me/hcmarket_bot?start=referral_355876562-project_1001)
+
 ## МОИ ДРУГИЕ БОТЫ
 
 ### 💩 [Boinkers](https://github.com/YarmolenkoD/boinkers)
