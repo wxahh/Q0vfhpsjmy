@@ -406,8 +406,8 @@ class Tapper:
                      return False
 
                  self.info(f"Detected Telegram channel subscription task")
-                 if not await self.join_telegram_channel(quest_data):
-                     self.error(f"Failed to subscribe to channel {quest_data}")
+                 if not await self.join_telegram_channel(task_data):
+                     self.error(f"Failed to subscribe to channel {task_data}")
                      return False
                  await asyncio.sleep(random.uniform(3, 5))
 

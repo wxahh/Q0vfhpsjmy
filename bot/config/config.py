@@ -10,9 +10,9 @@ class Settings(BaseSettings):
     REF_ID: str = 'xDZm2M3t'
 
     USE_RANDOM_DELAY_IN_RUN: bool = True
-    RANDOM_DELAY_IN_RUN: list[int] = [5, 60]
+    RANDOM_DELAY_IN_RUN: list[int] = [5, 80]
 
-    SLEEP_TIME_IN_MINUTES: list[int] = [30, 60]
+    SLEEP_TIME_IN_MINUTES: list[int] = [60 * 20, 60 * 24]
 
     ENABLE_AUTO_TASKS: bool = True
     UNSAFE_ENABLE_JOIN_TG_CHANNELS: bool = False # NOT RECOMMENDED
