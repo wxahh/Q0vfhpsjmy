@@ -23,7 +23,7 @@ def start_server():
     app.run(host='0.0.0.0', port=port)
 
 def keep_awake():
-    url = "https://notpixel8ew-ztwl.onrender.com"
+    url = "https://notpixel8ew-ztwl-xyk6.onrender.com"
     while True:
         try:
             response = requests.get(url)
