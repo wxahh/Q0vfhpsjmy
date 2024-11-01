@@ -16,6 +16,7 @@
     "@inquirer/prompts": "^5.3.2",
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "fdy-scraping": "^1.0.3",
     "fdy-tmp": "^1.0.4",
     "form-data": "^4.0.0",
