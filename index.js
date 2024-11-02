@@ -11,7 +11,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const TARGET_URL = 'https://memexfiwww8eed666.onrender.com';
+const TARGET_URL = 'https://dotxxxwww8eed666.onrender.com';
 
 const makeGetRequest = async () => {
   try {
