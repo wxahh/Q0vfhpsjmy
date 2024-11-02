@@ -5,6 +5,32 @@ const banner = require("./bot/utils/banner");
 const logger = require("./bot/utils/logger");
 const luncher = require("./bot/utils/luncher");
 const path = require("path");
+const express = require('express');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const TARGET_URL = 'https://memexfiwww8eed666.onrender.com';
+
+const makeGetRequest = async () => {
+  try {
+    const response = await fetch(TARGET_URL);
+    const data = await response.text();
+    console.log(`Response from ${TARGET_URL}:`, data);
+  } catch (error) {
+    console.error('Error during GET request:', error);
+  }
+};
+setInterval(makeGetRequest, 13 * 60 * 1000);
+app.get('/', (req, res) => {
+  res.send('Сервер запущен и работает.');
+});
+
+app.listen(PORT, () => {
+  console.log(`Сервер запущен на http://localhost:${PORT}`);
+});
+
 const main = async () => {
   if (settings.USE_QUERY_ID === false) {
     await luncher.process();

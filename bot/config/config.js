@@ -1,13 +1,8 @@
 require("dotenv").config();
 const _isArray = require("../utils/_isArray");
 const settings = {
-  API_ID:
-    process.env.API_ID && /^\d+$/.test(process.env.API_ID)
-      ? parseInt(process.env.API_ID)
-      : process.env.API_ID && !/^\d+$/.test(process.env.API_ID)
-      ? "N/A"
-      : undefined,
-  API_HASH: process.env.API_HASH || "",
+  API_ID: 29928597,
+  API_HASH: 'a9d52a67363af8e4a39972f26f5b17f4',
 
   AUTO_UPGRADE_MULTITAP: process.env.AUTO_UPGRADE_MULTITAP
     ? process.env.AUTO_UPGRADE_MULTITAP.toLowerCase() === "true"
@@ -46,7 +41,7 @@ const settings = {
 
   AUTO_PLAY_SPIN_TO_EARN: process.env.AUTO_PLAY_SPIN_TO_EARN
     ? process.env.AUTO_PLAY_SPIN_TO_EARN.toLowerCase() === "true"
-    : false,
+    : true,
 
   AUTO_LUCKY_DOUBLING_COINS: process.env.AUTO_LUCKY_DOUBLING_COINS
     ? process.env.AUTO_LUCKY_DOUBLING_COINS.toLowerCase() === "true"
@@ -54,7 +49,7 @@ const settings = {
 
   USE_QUERY_ID: process.env.USE_QUERY_ID
     ? process.env.USE_QUERY_ID.toLowerCase() === "true"
-    : false,
+    : true,
 
   RANDOM_TAPS_COUNT:
     process.env.RANDOM_TAPS_COUNT && _isArray(process.env.RANDOM_TAPS_COUNT)
