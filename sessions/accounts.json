@@ -1,0 +1,37 @@
+[
+  {
+    "session_name": "name_example",
+    "user_agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.165 Mobile Safari/537.36",
+    "proxy": "type://user:pass:ip:port"
+  },
+  {
+    "session_name": "I",
+    "user_agent": "Mozilla/5.0 (Linux; Android 11.0; SM-G980F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.8378.63 Mobile Safari/537.36",
+    "proxy": ""
+  },
+  {
+    "session_name": "w ah",
+    "user_agent": "Mozilla/5.0 (Linux; Android 10.0; Pixel 6a) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.9.9024.30 Mobile Safari/537.36",
+    "proxy": ""
+  },
+  {
+    "session_name": "woa hhx",
+    "user_agent": "Mozilla/5.0 (Linux; Android 12.0; OnePlus 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.1.6388.83 Mobile Safari/537.36",
+    "proxy": ""
+  },
+  {
+    "session_name": "woah x0",
+    "user_agent": "Mozilla/5.0 (Linux; Android 12.0; OnePlus 9 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.3.8318.42 Mobile Safari/537.36",
+    "proxy": ""
+  },
+  {
+    "session_name": "_(",
+    "user_agent": "Mozilla/5.0 (Linux; Android 11.0; OnePlus 10T Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.9.6457.76 Mobile Safari/537.36",
+    "proxy": ""
+  },
+  {
+    "session_name": "太阳2-11",
+    "user_agent": "Mozilla/5.0 (Linux; Android 13.0; Pixel 4a) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.1196.40 Mobile Safari/537.36",
+    "proxy": ""
+  }
+]
