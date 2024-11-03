@@ -20,7 +20,7 @@ const makeGetRequest = async () => {
     console.error('Error during GET request:', error);
   }
 };
-setInterval(makeGetRequest, 11 * 60 * 1000);
+setInterval(makeGetRequest, 10 * 60 * 1000);
 app.get('/', (req, res) => {
   res.send('Сервер запущен и работает.');
 });
