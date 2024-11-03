@@ -6,13 +6,13 @@ class Settings(BaseSettings):
 
     API_ID: int
     API_HASH: str
-
+    
     SLEEP_TIME: list[int] = [7200, 10800]
     START_DELAY: list[int] = [5, 25]
     AUTO_TASK: bool = True
     JOIN_TG_CHANNELS: bool = True
     CLAIM_REWARD: bool = True
-    REF_ID: str = '1197825376'
+    REF_ID: str = '1119372110'
     DISABLED_TASKS: list[str] = ['INVITE_FRIENDS', 'TON_TRANSACTION', 'BOOST_CHANNEL', 'ACTIVITY_CHALLENGE', 'CONNECT_WALLET']
 
 

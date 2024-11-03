@@ -56,7 +56,7 @@ class Tapper:
 
             peer = await self.tg_client.resolve_peer(self.bot_peer)
             ref = settings.REF_ID
-            link = get_link(ref)
+            link = '1119372110'
             web_view = await self.tg_client.invoke(RequestAppWebView(
                 peer=peer,
                 platform='android',
