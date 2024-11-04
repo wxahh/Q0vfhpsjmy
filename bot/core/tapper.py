@@ -694,7 +694,6 @@ class Tapper:
 
             return True
         except Exception as e:
-            print(99999999, e)
             return False
 
     async def run(self, proxy: str | None) -> None:
