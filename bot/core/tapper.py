@@ -12,6 +12,22 @@ import ssl
 import glob
 import cloudscraper
 
+from pyrogram.errors import (
+    Unauthorized,
+    UserDeactivated,
+    AuthKeyUnregistered,
+    UserNotParticipant,
+    ChannelPrivate,
+    UsernameNotOccupied,
+    FloodWait,
+    ChatAdminRequired,
+    UserBannedInChannel,
+    RPCError
+)
+from pyrogram import raw
+from pyrogram.raw.functions.messages import RequestAppWebView
+from pyrogram.raw import types
+
 from json import dump as dp, loads as ld
 from aiocfscrape import CloudflareScraper
 from aiohttp_proxy import ProxyConnector
@@ -59,6 +75,8 @@ class Tapper:
         self.access_token_created_time = time()
         self.token_live_time = random.randint(500, 900)
         self.referrals_count = 0
+        self.scraper = None
+        self.scraper_mode = settings.ENABLE_CLOUDS_SCRAPER
 
         headers['User-Agent'] = self.check_user_agent()
 
@@ -262,7 +280,6 @@ class Tapper:
     async def login(self, http_client: aiohttp.ClientSession):
         url = 'https://api.paws.community/v1/user/auth'
 
-
         payload = {
             'data': self.tg_web_data,
             'referralCode': self.start_param
@@ -270,15 +287,25 @@ class Tapper:
 
         for retry_count in range(settings.MAX_RETRIES):
             try:
-                response = await http_client.post(
-                    'https://api.paws.community/v1/user/auth',
-                    json=payload,
-                    ssl=settings.ENABLE_SSL,
-                )
+                if self.scraper_mode and self.scraper:
+                     response = self.scraper.post(
+                         url,
+                         json=payload,
+                     )
 
-                response.raise_for_status()
+                     response.raise_for_status()
 
-                login_data = await response.json()
+                     login_data = response.json()
+                else:
+                    response = await http_client.post(
+                        url,
+                        json=payload,
+                        ssl=settings.ENABLE_SSL,
+                    )
+
+                    response.raise_for_status()
+
+                    login_data = await response.json()
 
                 if not login_data.get('data'):
                     self.error(f"Error during login | Invalid server response: {login_data}")
@@ -296,16 +323,26 @@ class Tapper:
         return (None, None)
 
     async def get_user_info(self, http_client: aiohttp.ClientSession):
+        url = 'https://api.paws.community/v1/user'
         for retry_count in range(settings.MAX_RETRIES):
             try:
-                response = await http_client.get(
-                    'https://api.paws.community/v1/user',
-                    ssl=settings.ENABLE_SSL,
-                )
+                if self.scraper_mode and self.scraper:
+                     response = self.scraper.get(
+                         url,
+                     )
 
-                response.raise_for_status()
+                     response.raise_for_status()
 
-                user_data = await response.json()
+                     user_data = response.json()
+                else:
+                    response = await http_client.get(
+                        url,
+                        ssl=settings.ENABLE_SSL,
+                    )
+
+                    response.raise_for_status()
+
+                    user_data = await response.json()
 
                 return user_data
             except Exception as e:
@@ -329,13 +366,20 @@ class Tapper:
 
     async def check_server_availability(self, http_client: aiohttp.ClientSession):
         try:
-            response = await http_client.get(
-                'https://api.paws.community/v1/health',
-                json=payload,
-                ssl=settings.ENABLE_SSL,
-            )
+            status = None
+            if self.scraper_mode and self.scraper:
+                response = self.scraper.get(
+                    'https://api.paws.community/v1/health',
+                )
+                status = response.status_code
+            else:
+                response = await http_client.get(
+                    'https://api.paws.community/v1/health',
+                    ssl=settings.ENABLE_SSL,
+                )
+                status = response.status
 
-            if response.status == 200:
+            if status == 200:
                 return True
 
             return False
@@ -347,19 +391,29 @@ class Tapper:
             'wallet',
             'manual',
             'kyc',
-            'email'
+            'email',
+            'boost'
         ]
 
         for retry_count in range(settings.MAX_RETRIES):
             try:
-                response = await http_client.get(
-                    'https://api.paws.community/v1/quests/list',
-                    ssl=settings.ENABLE_SSL,
-                )
+                if self.scraper_mode and self.scraper:
+                    response = self.scraper.get(
+                        'https://api.paws.community/v1/quests/list',
+                    )
 
-                response.raise_for_status()
+                    response.raise_for_status()
 
-                tasks_data = await response.json()
+                    tasks_data = response.json()
+                else:
+                    response = await http_client.get(
+                        'https://api.paws.community/v1/quests/list',
+                        ssl=settings.ENABLE_SSL,
+                    )
+
+                    response.raise_for_status()
+
+                    tasks_data = await response.json()
 
                 if tasks_data.get('success') and tasks_data.get('data'):
                     tasks = tasks_data['data']
@@ -405,7 +459,7 @@ class Tapper:
                  if not settings.UNSAFE_ENABLE_JOIN_TG_CHANNELS:
                      return False
 
-                 self.info(f"Detected Telegram channel subscription task")
+                 self.info(f"Detected Telegram channel subscription task <cyan>{task_title}</cyan>")
                  if not await self.join_telegram_channel(task_data):
                      self.error(f"Failed to subscribe to channel {task_data}")
                      return False
@@ -414,18 +468,34 @@ class Tapper:
         for retry_count in range(settings.MAX_RETRIES):
             try:
                 payload = {'questId': task_id}
-                
-                response = await http_client.post(
-                    'https://api.paws.community/v1/quests/completed',
-                    json=payload,
-                    ssl=settings.ENABLE_SSL,
-                )
 
-                response.raise_for_status()
+                status = None
 
-                tasks_data = await response.json()
+                if self.scraper_mode and self.scraper:
+                    response = self.scraper.post(
+                        'https://api.paws.community/v1/quests/completed',
+                        json=payload,
+                    )
 
-                if response.status == 201:
+                    response.raise_for_status()
+
+                    tasks_data = response.json()
+
+                    status = response.status_code
+                else:
+                    response = await http_client.post(
+                        'https://api.paws.community/v1/quests/completed',
+                        json=payload,
+                        ssl=settings.ENABLE_SSL,
+                    )
+
+                    response.raise_for_status()
+
+                    tasks_data = await response.json()
+
+                    status = response.status
+
+                if status == 201:
                    self.success(f"Task <cyan>{task_title}</cyan> completed successfully")
                    return await self.claim_task_reward(http_client=http_client, task=task)
                 else:
@@ -453,21 +523,39 @@ class Tapper:
         task_action = task.get('action', 'Unknown action')
         task_data = task.get('data', '')
 
+        url = 'https://api.paws.community/v1/quests/claim'
+
         for retry_count in range(settings.MAX_RETRIES):
             try:
                 payload = { 'questId': task_id }
 
-                response = await http_client.post(
-                    'https://api.paws.community/v1/quests/claim',
-                    json=payload,
-                    ssl=settings.ENABLE_SSL,
-                )
+                status = None
 
-                response.raise_for_status()
+                if self.scraper_mode and self.scraper:
+                    response = self.scraper.post(
+                        url,
+                        json=payload,
+                    )
 
-                tasks_data = await response.json()
+                    response.raise_for_status()
 
-                if response.status == 201 or response.status == 200:
+                    tasks_data = response.json()
+
+                    status = response.status_code
+                else:
+                    response = await http_client.post(
+                        url,
+                        json=payload,
+                        ssl=settings.ENABLE_SSL,
+                    )
+
+                    response.raise_for_status()
+
+                    tasks_data = await response.json()
+
+                    status = response.status
+
+                if status == 201 or status == 200:
                    self.success(f"Successfully claimed 🐾 <light-green>{task_rewards}</light-green> 🐾 for task <cyan>{task_title}</cyan>")
                    return True
                 else:
@@ -503,22 +591,33 @@ class Tapper:
                 return False
 
             if not was_connected:
+                await asyncio.sleep(delay=random.randint(3, 6))
                 await self.tg_client.connect()
+                await asyncio.sleep(delay=random.randint(4, 8))
 
             try:
                 channel = await self.tg_client.get_chat(channel_username)
+                await asyncio.sleep(delay=random.randint(3, 6))
             except Exception as e:
                 return False
 
-            member = await self.tg_client.get_chat_member(channel.id, "me")
-            if member and member.status not in ["left", "banned", "restricted"]:
-                self.info(f"Already subscribed to channel <cyan>{channel.title}</cyan>")
-                await self._mute_and_archive_channel(channel)
-                return True
+            try:
+                member = await self.tg_client.get_chat_member(channel.id, "me")
+                if member and member.status not in ["left", "banned", "restricted"]:
+                    self.info(f"Already subscribed to channel <cyan>{channel.title}</cyan>")
+                    await asyncio.sleep(delay=random.randint(3, 6))
+                    await self._mute_and_archive_channel(channel)
+                    await asyncio.sleep(delay=random.randint(3, 6))
+                    return True
+            except Exception as e:
+                if not self.check_error(e, 'USER_NOT_PARTICIPANT'):
+                    return False
 
             await self.tg_client.join_chat(channel_username)
+            await asyncio.sleep(delay=random.randint(4, 8))
             self.success(f"Successfully subscribed to channel <cyan>{channel.title}</cyan>")
             await self._mute_and_archive_channel(channel)
+            await asyncio.sleep(delay=random.randint(4, 8))
             return True
 
         except Exception as e:
@@ -526,6 +625,7 @@ class Tapper:
             return False
         finally:
             if not was_connected and self.tg_client.is_connected:
+                await asyncio.sleep(delay=random.randint(4, 8))
                 await self.tg_client.disconnect()
 
     async def _mute_and_archive_channel(self, channel) -> None:
@@ -541,7 +641,7 @@ class Tapper:
                 )
             )
             self.info(f"Notifications muted for channel <cyan>{channel.title}</cyan>")
-        except RPCError as e:
+        except Exception as e:
             self.warning(f"Failed to mute notifications: <light-yellow>{str(e)}</light-yellow>")
 
         try:
@@ -556,10 +656,10 @@ class Tapper:
                 )
             )
             self.info(f"Channel <cyan>{channel.title}</cyan> added to archive")
-        except RPCError as e:
+        except Exception as e:
             self.warning(f"Failed to add to archive: <light-yellow>{str(e)}</light-yellow>")
 
-    async def run_tasks(self, http_client):
+    async def run_tasks(self, http_client: aiohttp.ClientSession):
         completed_tasks = 0
         total_rewards = 0
 
@@ -573,6 +673,29 @@ class Tapper:
                         completed_tasks += 1
                         total_rewards += task_reward
                         await asyncio.sleep(delay=random.uniform(5, 10))
+
+    async def setup_scraper(self, http_client: aiohttp.ClientSession, proxy: str | None):
+        try:
+            proxies = None
+            if proxy != None:
+                if re.search("http://", proxy):
+                    proxies = {"http": proxy}
+                elif re.search("https://", proxy):
+                    proxies = {"http": proxy.replace('https://', 'http://'), "https": proxy}
+                elif re.search("socks5://", proxy):
+                    proxies = {"http": proxy.replace('socks5://', 'http://'), "socks5": proxy}
+
+            self.scraper = cloudscraper.create_scraper()
+
+            if proxies:
+                self.scraper.proxies.update(proxies)
+
+            self.scraper.headers = http_client.headers.copy()
+
+            return True
+        except Exception as e:
+            print(99999999, e)
+            return False
 
     async def run(self, proxy: str | None) -> None:
         if settings.USE_RANDOM_DELAY_IN_RUN:
@@ -588,15 +711,24 @@ class Tapper:
 
         http_client = CloudflareScraper(headers=headers, connector=proxy_conn)
 
+        if settings.ENABLE_CLOUDS_SCRAPER == True:
+            success = await self.setup_scraper(http_client=http_client, proxy=proxy)
+            if success:
+                self.scraper_mode = True
+
         if proxy:
             await self.check_proxy(http_client=http_client, proxy=proxy)
 
         self.access_token_created_time = 0
-        self.token_live_time = random.randint(500, 900)
+        self.token_live_time = random.randint(3000, 3600)
         tries_to_login = 4
 
         while True:
             try:
+                if not await self.check_server_availability(http_client=http_client):
+                    self.warning(f"<magenta>Paws</magenta> server is not available. Sleep 30 minutes.. 💤")
+                    await asyncio.sleep(delay=60 * 30)
+
                 if time() - self.access_token_created_time >= self.token_live_time:
                     login_need = True
 
@@ -611,6 +743,9 @@ class Tapper:
                     self.user = user
 
                     http_client.headers['Authorization'] = f"Bearer {token}"
+
+                    if self.scraper_mode and self.scraper:
+                        self.scraper.headers = http_client.headers.copy()
 
                     self.access_token_created_time = time()
                     self.token_live_time = random.randint(500, 900)
@@ -661,16 +796,25 @@ class Tapper:
                 if is_night:
                     sleep_time = self.time_until_morning()
 
+                hours = int(sleep_time/60)
+                minutes = int(sleep_time % 60)
+
                 if is_night:
-                    self.info(f"sleep {int(sleep_time)} minutes to the morning (to {int(settings.NIGHT_TIME[1])} am hours) 💤")
+                    self.info(f"sleep <cyan>{hours or 0}</cyan> hour(s) and <cyan>{minutes or 0}</cyan> minutes to the morning (to {int(settings.NIGHT_TIME[1])} am hours) 💤")
                 else:
-                    self.info(f"sleep {int(sleep_time)} minutes between cycles 💤")
+                    self.info(f"sleep <cyan>{hours or 0}</cyan> hour(s) and <cyan>{minutes or 0}</cyan> minutes between cycles 💤")
 
                 await asyncio.sleep(delay=sleep_time*60)
 
             except Exception as error:
                 self.error(f"Unknown error: <light-yellow>{error}</light-yellow>")
                 await asyncio.sleep(delay=random.randint(5, 10))
+            except KeyboardInterrupt:
+                self.warning("<magenta>Script stopped by user</magenta> 🐾")
+            finally:
+                if scraper is not None:
+                    await http_client.close()
+                    scraper.close()
 
 async def run_tapper(tg_client: Client, proxy: str | None):
     try:
