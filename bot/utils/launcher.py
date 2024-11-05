@@ -9,6 +9,7 @@ from better_proxy import Proxy
 
 from bot.config import settings
 from bot.utils import logger
+from bot.utils.wallets import generate_wallets, get_wallets
 from bot.core.tapper import run_tapper
 from bot.core.registrator import register_sessions
 
@@ -94,9 +95,14 @@ async def process() -> None:
         while True:
             action = input("> ")
 
+            check_array = ["1", "2"]
+
+            if settings.ENABLE_CHECKER:
+                check_array = ["1", "2", "3"]
+
             if not action.isdigit():
                 logger.warning("Action must be number")
-            elif action not in ["1", "2"]:
+            elif action not in check_array:
                 logger.warning("Action must be 1 or 2")
             else:
                 action = int(action)
@@ -110,14 +116,34 @@ async def process() -> None:
     elif action == 2:
         await register_sessions()
 
+    elif action == 3 and settings.ENABLE_CHECKER:
+         while True:
+             count = input("Input number of wallet you want to create: ")
+             try:
+                 count = int(count)
+                 generate_wallets(count)
+                 break
+             except Exception as e:
+                 logger.error(e)
+                 print("Invaild number, please re-enter...")
+
 async def run_tasks(tg_clients: list[Client]):
     proxies = get_proxies()
+    wallets = get_wallets()
     proxies_cycle = cycle(proxies) if proxies else None
+    wallets_cycle = cycle(wallets) if wallets else None
+
+    if len(wallets) < len(tg_clients):
+        logger.warning(f"<yellow>Wallets not enough for all accounts please generate <red>{len(tg_clients)-len(wallets)}</red> wallets more!</yellow>")
+        await asyncio.sleep(3)
+
     tasks = [
         asyncio.create_task(
             run_tapper(
                 tg_client=tg_client,
                 proxy=next(proxies_cycle) if proxies_cycle else None,
+                wallet=next(wallets_cycle) if wallets_cycle else None,
+                wallets=wallets
             )
         )
         for tg_client in tg_clients

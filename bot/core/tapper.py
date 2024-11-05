@@ -59,7 +59,7 @@ from bot.exceptions import InvalidSession
 self_tg_client = SelfTGClient()
 
 class Tapper:
-    def __init__(self, tg_client: Client):
+    def __init__(self, tg_client: Client, wallet: str | None, wallet_memo: str | None):
         self.session_name = tg_client.name
         self.tg_client = tg_client
         self.user_id = 0
@@ -76,6 +76,9 @@ class Tapper:
         self.token_live_time = random.randint(500, 900)
         self.referrals_count = 0
         self.scraper = None
+        self.wallet = wallet
+        self.wallet_connected = False
+        self.wallet_memo = wallet_memo
         self.scraper_mode = settings.ENABLE_CLOUDS_SCRAPER
 
         headers['User-Agent'] = self.check_user_agent()
@@ -125,6 +128,23 @@ class Tapper:
             return user_agent_str
 
     def load_user_agents(self):
+        user_agents_file_name = "user_agents.json"
+
+        try:
+            with open(user_agents_file_name, 'r') as user_agents:
+                session_data = json.load(user_agents)
+                if isinstance(session_data, list):
+                    return session_data
+
+        except FileNotFoundError:
+            logger.warning("User agents file not found, creating...")
+
+        except json.JSONDecodeError:
+            logger.warning("User agents file is empty or corrupted.")
+
+        return []
+
+    def get_wallet_memo(self):
         user_agents_file_name = "user_agents.json"
 
         try:
@@ -388,12 +408,14 @@ class Tapper:
 
     async def get_tasks(self, http_client: aiohttp.ClientSession):
         manual_tasks = [
-            'wallet',
             'manual',
             'kyc',
             'email',
             'boost'
         ]
+
+        if not self.wallet_connected:
+            manual_tasks.append('wallet')
 
         for retry_count in range(settings.MAX_RETRIES):
             try:
@@ -460,8 +482,9 @@ class Tapper:
                      return False
 
                  self.info(f"Detected Telegram channel subscription task <cyan>{task_title}</cyan>")
-                 if not await self.join_telegram_channel(task_data):
-                     self.error(f"Failed to subscribe to channel {task_data}")
+                 success = await self.join_telegram_channel(task_data)
+                 if not success:
+                     self.error(f"Failed to subscribe to channel <cyan>{task_title}</cyan>")
                      return False
                  await asyncio.sleep(random.uniform(3, 5))
 
@@ -674,6 +697,64 @@ class Tapper:
                         total_rewards += task_reward
                         await asyncio.sleep(delay=random.uniform(5, 10))
 
+    async def bind_wallet(self, http_client: aiohttp.ClientSession):
+        url = 'https://api.paws.community/v1/user/wallet'
+
+        try:
+            payload = {
+                "wallet": self.wallet
+            }
+
+            status = None
+            success = False
+            if self.scraper_mode and self.scraper:
+                res = self.scraper.post(url, json=payload)
+                status = res.status_code
+                success = res.json().get("success") is True
+            else:
+                res = await http_client.post(url, json=payload, ssl=settings.ENABLE_SSL)
+                status = res.status
+                parsed = await res.json()
+                success = parsed.get("success") is True
+
+            if status == 201 and success:
+                return True
+            else:
+                print(res.text)
+                return False
+        except Exception as e:
+            self.error(f"Unknown error while trying to connect wallet: {e}")
+            return False
+
+    async def handle_wallet(self, http_client: aiohttp.ClientSession):
+        try:
+            if settings.ENABLE_CHECKER and self.wallet is not None:
+                self.info(f"Starting to connect with wallet <cyan>{self.wallet}</cyan>")
+
+                check = await self.bind_wallet(http_client=http_client)
+
+                if check:
+                    self.success(f"<green>Successfully bind with wallet: <cyan>{self.wallet}</cyan></green>")
+                    with open('used_wallet.json', 'r') as file:
+                        wallets = json.load(file)
+
+                    wallets.update({
+                        self.wallet: {
+                            "memonic": self.wallet_memo,
+                            "used_for": self.session_name
+                        }
+                    })
+
+                    self.wallet_connected = True
+
+                    with open('used_wallet.json', 'w') as file:
+                        json.dump(wallets, file, indent=4)
+                else:
+                    self.warning(f"<yellow>Failed to bind with wallet: {self.wallet}</yellow>")
+        except Exception as e:
+            self.error(f"Unknown error while trying to connect wallet: {e}")
+            return False
+
     async def setup_scraper(self, http_client: aiohttp.ClientSession, proxy: str | None):
         try:
             proxies = None
@@ -775,12 +856,36 @@ class Tapper:
 
             try:
                 if self.user is not None:
+                    wallet = user.get('userData', {}).get("wallet", None)
+
+                    referrals_count = user.get('referralData', {}).get('referralsCount', None)
+
+                    if not wallet:
+                        wallet_text = "No wallet"
+                    else:
+                        self.wallet_connected = True
+
                     current_balance = await self.get_balance(http_client=http_client)
+
+                    if settings.ENABLE_CHECKER:
+                        if not wallet:
+                            self.info(f"Wallet not connected.")
+#                             self.info(f"Wallet not connected. \n<cyan>To connect wallets to your accounts you can buy the soft:</cyan> https://t.me/hcmarket_bot?start=referral_355876562-project_1016")
+                        else:
+                            self.info(f"Wallet already connected: <cyan>{self.wallet}</cyan> ")
+
+                    if not wallet:
+                        await self.handle_wallet(http_client=http_client)
 
                     if current_balance is None:
                         self.info(f"Current balance: 🐾 Unknown 🐾")
                     else:
                         self.info(f"Current balance: 🐾<light-green>{current_balance}</light-green> 🐾")
+
+                    if referrals_count is None:
+                        self.info(f"Referrals count: 🐾 Unknown 🐾")
+                    else:
+                        self.info(f"Referrals count: 🐶 <cyan>{referrals_count}</cyan> 🐶")
 
                     if settings.ENABLE_AUTO_TASKS == True:
                         await self.run_tasks(http_client=http_client)
@@ -815,8 +920,11 @@ class Tapper:
                     await http_client.close()
                     scraper.close()
 
-async def run_tapper(tg_client: Client, proxy: str | None):
+async def run_tapper(tg_client: Client, proxy: str | None, wallet: str | None, wallets: dict | None):
     try:
-        await Tapper(tg_client=tg_client).run(proxy=proxy)
+        wallet_memo = None
+        if wallets and wallet:
+            wallet_memo = wallets.get(wallet, None)
+        await Tapper(tg_client=tg_client, wallet=wallet, wallet_memo=wallet_memo).run(proxy=proxy)
     except InvalidSession:
         self.error(f"{tg_client.name} | Invalid Session")

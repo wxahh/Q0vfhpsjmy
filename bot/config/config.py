@@ -30,6 +30,8 @@ class Settings(BaseSettings):
     ENABLE_SSL: bool = False
     ENABLE_CLOUDS_SCRAPER: bool = True
 
+    ENABLE_CHECKER: bool = False # DONT TOUCH THIS
+
 settings = Settings()
 
 
