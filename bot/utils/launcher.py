@@ -133,7 +133,7 @@ async def run_tasks(tg_clients: list[Client]):
     proxies_cycle = cycle(proxies) if proxies else None
     wallets_cycle = cycle(wallets) if wallets else None
 
-    if len(wallets) < len(tg_clients):
+    if settings.ENABLE_CHECKER and len(wallets) < len(tg_clients):
         logger.warning(f"<yellow>Wallets not enough for all accounts please generate <red>{len(tg_clients)-len(wallets)}</red> wallets more!</yellow>")
         await asyncio.sleep(3)
 

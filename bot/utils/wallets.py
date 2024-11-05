@@ -65,5 +65,6 @@ def get_wallets():
         # print(wallets)
         return wallets
     else:
-        logger.warning("<yellow>TO CONNECT WALLET YOU MUST GENERATE WALLET USING OPTION 3 FIRST!</yellow>")
-        sys.exit()
+        if settings.ENABLE_CHECKER:
+            logger.warning("<yellow>TO CONNECT WALLET YOU MUST GENERATE WALLET USING OPTION 3 FIRST!</yellow>")
+            sys.exit()
