@@ -414,8 +414,21 @@ class Tapper:
             'boost'
         ]
 
-        if not self.wallet_connected:
+        if not self.wallet_connected or not settings.ENABLE_CHECKER:
             manual_tasks.append('wallet')
+
+        tasks_to_do = [
+            'paragraph',
+            'blum',
+            'telegram',
+            'twitter',
+            'invite',
+            'emojiname',
+            'linked',
+        ]
+
+        if not self.wallet_connected and settings.ENABLE_CHECKER:
+            tasks_to_do.append('wallet')
 
         for retry_count in range(settings.MAX_RETRIES):
             try:
@@ -455,10 +468,8 @@ class Tapper:
                                 continue
 
                         task_code = task.get('code', '').lower()
-                        if any(manual_type in task_code for manual_type in manual_tasks):
-                            continue
-
-                        filtered_tasks.append(task)
+                        if any(task_to_do in task_code for task_to_do in tasks_to_do):
+                            filtered_tasks.append(task)
 
                     return filtered_tasks
                 return []
@@ -475,6 +486,7 @@ class Tapper:
         task_rewards = sum(reward['amount'] for reward in task.get('rewards', []))
         task_action = task.get('action', 'Unknown action')
         task_data = task.get('data', '')
+        task_code = task.get('code', '')
 
         if task_type == 'social' and task_action == 'link':
              if 't.me/' in task_data:
@@ -482,7 +494,7 @@ class Tapper:
                      return False
 
                  self.info(f"Detected Telegram channel subscription task <cyan>{task_title}</cyan>")
-                 success = await self.join_telegram_channel(task_data)
+                 success = await self.join_telegram_channel(task_data, task_code)
                  if not success:
                      self.error(f"Failed to subscribe to channel <cyan>{task_title}</cyan>")
                      return False
@@ -600,14 +612,17 @@ class Tapper:
 
         return False
 
-    async def join_telegram_channel(self, channel_url: str) -> bool:
+    async def join_telegram_channel(self, channel_url: str, task_code: str) -> bool:
         if not settings.UNSAFE_ENABLE_JOIN_TG_CHANNELS:
             return False
 
         was_connected = self.tg_client.is_connected
 
         try:
-            channel_username = channel_url.split('/')[-1].strip()
+            if task_code == 'blum':
+                channel_username = 'blumcrypto'
+            else:
+                channel_username = channel_url.split('/')[-1].strip()
 
             if not channel_username:
                 self.error(f"Invalid channel link: <light-yellow>{channel_url}</light-yellow>")
@@ -629,8 +644,9 @@ class Tapper:
                 if member and member.status not in ["left", "banned", "restricted"]:
                     self.info(f"Already subscribed to channel <cyan>{channel.title}</cyan>")
                     await asyncio.sleep(delay=random.randint(3, 6))
-                    await self._mute_and_archive_channel(channel)
-                    await asyncio.sleep(delay=random.randint(3, 6))
+                    if settings.MUTE_AND_ARCHIVE_TG_CHANNELS:
+                        await self._mute_and_archive_channel(channel)
+                        await asyncio.sleep(delay=random.randint(3, 6))
                     return True
             except Exception as e:
                 if not self.check_error(e, 'USER_NOT_PARTICIPANT'):
@@ -639,8 +655,9 @@ class Tapper:
             await self.tg_client.join_chat(channel_username)
             await asyncio.sleep(delay=random.randint(4, 8))
             self.success(f"Successfully subscribed to channel <cyan>{channel.title}</cyan>")
-            await self._mute_and_archive_channel(channel)
-            await asyncio.sleep(delay=random.randint(4, 8))
+            if settings.MUTE_AND_ARCHIVE_TG_CHANNELS:
+                await self._mute_and_archive_channel(channel)
+                await asyncio.sleep(delay=random.randint(3, 6))
             return True
 
         except Exception as e:

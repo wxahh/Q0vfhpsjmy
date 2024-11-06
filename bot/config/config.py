@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
     ENABLE_AUTO_TASKS: bool = True
     UNSAFE_ENABLE_JOIN_TG_CHANNELS: bool = False # NOT RECOMMENDED
+    MUTE_AND_ARCHIVE_TG_CHANNELS: bool = False
 
     DISABLE_IN_NIGHT: bool = False
     NIGHT_TIME: list[int] = [23, 6]
