@@ -887,7 +887,6 @@ class Tapper:
                     if settings.ENABLE_CHECKER:
                         if not wallet:
                             self.info(f"Wallet not connected.")
-#                             self.info(f"Wallet not connected. \n<cyan>To connect wallets to your accounts you can buy the soft:</cyan> https://t.me/hcmarket_bot?start=referral_355876562-project_1016")
                         else:
                             self.info(f"Wallet already connected: <cyan>{self.wallet}</cyan> ")
 
@@ -931,11 +930,12 @@ class Tapper:
                 self.error(f"Unknown error: <light-yellow>{error}</light-yellow>")
                 await asyncio.sleep(delay=random.randint(5, 10))
             except KeyboardInterrupt:
-                self.warning("<magenta>Script stopped by user</magenta> 🐾")
-            finally:
-                if scraper is not None:
-                    await http_client.close()
-                    scraper.close()
+                 if http_client:
+                     try:
+                        await http_client.close()
+                     except Exception as error:
+                         await asyncio.sleep(delay=0.5)
+                 await asyncio.sleep(delay=1)
 
 async def run_tapper(tg_client: Client, proxy: str | None, wallet: str | None, wallets: dict | None):
     try:
@@ -945,3 +945,5 @@ async def run_tapper(tg_client: Client, proxy: str | None, wallet: str | None, w
         await Tapper(tg_client=tg_client, wallet=wallet, wallet_memo=wallet_memo).run(proxy=proxy)
     except InvalidSession:
         self.error(f"{tg_client.name} | Invalid Session")
+    except Exception as error:
+        await asyncio.sleep(delay=0.5)
