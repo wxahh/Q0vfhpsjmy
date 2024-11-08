@@ -15,11 +15,11 @@ class Settings(BaseSettings):
     SLEEP_TIME_IN_MINUTES: list[int] = [60 * 24, 60 * 24]
 
     ENABLE_AUTO_TASKS: bool = True
-    UNSAFE_ENABLE_JOIN_TG_CHANNELS: bool = False # NOT RECOMMENDED
+    UNSAFE_ENABLE_JOIN_TG_CHANNELS: bool = True # NOT RECOMMENDED
     MUTE_AND_ARCHIVE_TG_CHANNELS: bool = False
 
-    DISABLE_IN_NIGHT: bool = False
-    NIGHT_TIME: list[int] = [23, 6]
+    DISABLE_IN_NIGHT: bool = True
+    NIGHT_TIME: list[int] = [1, 8]
 
     TASKS_BLACK_LIST: list[str] = []
     TASKS_TODO_LIST: list[str] = []
