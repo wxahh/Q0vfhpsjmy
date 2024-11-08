@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     TASKS_BLACK_LIST: list[str] = []
     TASKS_TODO_LIST: list[str] = []
 
-    USE_PROXY_FROM_FILE: bool = True
+    USE_PROXY_FROM_FILE: bool = False
 
     MAX_RETRIES: int = 3
 
