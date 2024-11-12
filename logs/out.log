@@ -1,0 +1,98 @@
+2024-11-12 19:59:08.99 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 0.
+2024-11-12 20:00:06.36 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:01:26.35 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:04:05.30 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:09:36.07 | SUCCESS | utils.core.telegram:create_sessions:153 | Added a account abao89899 (太阳2-11🍅) | 12498874036
+2024-11-12 20:12:51.42 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:13:03.85 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:14:26.13 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:14:26.13 | SUCCESS | utils.core.telegram:get_accounts:106 | Search available accounts: 6.
+2024-11-12 20:14:26.13 | INFO | utils.core.telegram:check_valid_accounts:85 | Checking accounts for valid...
+2024-11-12 20:14:27.96 | SUCCESS | utils.core.telegram:check_valid_accounts:95 | Valid accounts: 6; Invalid: 0
+2024-11-12 20:14:36.84 | SUCCESS | utils.major:login:175 | Thread 3 | 4.session | Login
+2024-11-12 20:14:38.04 | SUCCESS | utils.major:login:175 | Thread 4 | 5.session | Login
+2024-11-12 20:14:41.10 | SUCCESS | utils.major:login:175 | Thread 5 | 6.session | Login
+2024-11-12 20:14:41.39 | SUCCESS | utils.major:login:175 | Thread 2 | 3.session | Login
+2024-11-12 20:14:41.59 | SUCCESS | utils.major:login:175 | Thread 0 | 1.session | Login
+2024-11-12 20:14:43.31 | SUCCESS | utils.major:login:175 | Thread 1 | 2.session | Login
+2024-11-12 20:15:22.03 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:15:22.03 | SUCCESS | utils.core.telegram:get_accounts:106 | Search available accounts: 6.
+2024-11-12 20:15:22.03 | INFO | utils.core.telegram:check_valid_accounts:85 | Checking accounts for valid...
+2024-11-12 20:15:23.83 | SUCCESS | utils.core.telegram:check_valid_accounts:95 | Valid accounts: 6; Invalid: 0
+2024-11-12 20:15:30.99 | SUCCESS | utils.major:login:175 | Thread 4 | 5.session | Login
+2024-11-12 20:15:32.34 | WARNING | utils.starter:start:29 | Thread 4 | 5.session | Couldn't join to major channel.
+2024-11-12 20:15:32.83 | SUCCESS | utils.starter:start:32 | Thread 4 | 5.session | Collect daily streak.
+2024-11-12 20:15:33.88 | SUCCESS | utils.major:login:175 | Thread 2 | 3.session | Login
+2024-11-12 20:15:34.44 | SUCCESS | utils.major:login:175 | Thread 1 | 2.session | Login
+2024-11-12 20:15:34.52 | WARNING | utils.starter:start:29 | Thread 2 | 3.session | Couldn't join to major channel.
+2024-11-12 20:15:35.00 | SUCCESS | utils.starter:start:32 | Thread 2 | 3.session | Collect daily streak.
+2024-11-12 20:15:35.27 | WARNING | utils.starter:start:29 | Thread 1 | 2.session | Couldn't join to major channel.
+2024-11-12 20:15:35.77 | SUCCESS | utils.starter:start:32 | Thread 1 | 2.session | Collect daily streak.
+2024-11-12 20:15:35.91 | SUCCESS | utils.major:login:175 | Thread 5 | 6.session | Login
+2024-11-12 20:15:37.26 | WARNING | utils.starter:start:29 | Thread 5 | 6.session | Couldn't join to major channel.
+2024-11-12 20:15:37.72 | SUCCESS | utils.starter:start:32 | Thread 5 | 6.session | Collect daily streak.
+2024-11-12 20:15:38.69 | SUCCESS | utils.major:login:175 | Thread 0 | 1.session | Login
+2024-11-12 20:15:39.29 | WARNING | utils.starter:start:29 | Thread 0 | 1.session | Couldn't join to major channel.
+2024-11-12 20:15:39.81 | SUCCESS | utils.starter:start:32 | Thread 0 | 1.session | Collect daily streak.
+2024-11-12 20:15:40.50 | SUCCESS | utils.major:login:175 | Thread 3 | 4.session | Login
+2024-11-12 20:15:40.72 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Extra Stars Purchase #4»
+2024-11-12 20:15:41.37 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Extra Stars Purchase #4»
+2024-11-12 20:15:42.04 | WARNING | utils.starter:start:29 | Thread 3 | 4.session | Couldn't join to major channel.
+2024-11-12 20:15:42.30 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Extra Stars Purchase #4»
+2024-11-12 20:15:45.00 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Extra Stars Purchase #4»
+2024-11-12 20:15:46.18 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Extra Stars Purchase #3»
+2024-11-12 20:15:48.15 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Extra Stars Purchase #3»
+2024-11-12 20:15:48.26 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Extra Stars Purchase #4»
+2024-11-12 20:15:48.26 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Extra Stars Purchase #3»
+2024-11-12 20:15:49.05 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Extra Stars Purchase #4»
+2024-11-12 20:15:51.22 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Extra Stars Purchase #3»
+2024-11-12 20:15:53.32 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Promote TON blockchain #5»
+2024-11-12 20:15:53.85 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Promote TON blockchain #5»
+2024-11-12 20:15:55.79 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Extra Stars Purchase #3»
+2024-11-12 20:15:56.28 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Promote TON blockchain #5»
+2024-11-12 20:15:56.98 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Extra Stars Purchase #3»
+2024-11-12 20:15:57.35 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Promote TON blockchain #5»
+2024-11-12 20:15:59.03 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Promote TON blockchain #4»
+2024-11-12 20:15:59.86 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Promote TON blockchain #4»
+2024-11-12 20:16:01.63 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Promote TON blockchain #4»
+2024-11-12 20:16:02.53 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Promote TON blockchain #4»
+2024-11-12 20:16:03.24 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Promote TON blockchain #5»
+2024-11-12 20:16:04.18 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Promote TON blockchain #5»
+2024-11-12 20:16:05.37 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Extra Stars Purchase #2»
+2024-11-12 20:16:06.94 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Extra Stars Purchase #2»
+2024-11-12 20:16:07.78 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Extra Stars Purchase #2»
+2024-11-12 20:16:09.40 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Extra Stars Purchase #2»
+2024-11-12 20:16:10.31 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Promote TON blockchain #4»
+2024-11-12 20:16:11.71 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Promote TON blockchain #4»
+2024-11-12 20:16:11.96 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Promote TON blockchain #3»
+2024-11-12 20:16:13.02 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Promote TON blockchain #3»
+2024-11-12 20:16:14.95 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Promote TON blockchain #3»
+2024-11-12 20:16:16.05 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Promote TON blockchain #3»
+2024-11-12 20:16:17.56 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Extra Stars Purchase #2»
+2024-11-12 20:16:17.87 | WARNING | utils.starter:start:43 | Thread 2 | 3.session | Couldn't complete task «Extra Stars Purchase #1»
+2024-11-12 20:16:19.08 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Extra Stars Purchase #2»
+2024-11-12 20:16:20.18 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Extra Stars Purchase #1»
+2024-11-12 20:16:20.74 | WARNING | utils.starter:start:43 | Thread 5 | 6.session | Couldn't complete task «Extra Stars Purchase #1»
+2024-11-12 20:16:21.58 | WARNING | utils.starter:start:43 | Thread 1 | 2.session | Couldn't complete task «Extra Stars Purchase #1»
+2024-11-12 20:16:23.78 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Promote TON blockchain #3»
+2024-11-12 20:16:24.06 | SUCCESS | utils.starter:start:41 | Thread 2 | 3.session | Completed task «Follow Major in Telegram» and got 1250 Stars
+2024-11-12 20:16:24.38 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Promote TON blockchain #3»
+2024-11-12 20:16:26.08 | SUCCESS | utils.starter:start:41 | Thread 5 | 6.session | Completed task «Follow Major in Telegram» and got 1250 Stars
+2024-11-12 20:16:28.13 | WARNING | utils.starter:start:43 | Thread 4 | 5.session | Couldn't complete task «Follow Major in Telegram»
+2024-11-12 20:16:29.34 | SUCCESS | utils.starter:start:41 | Thread 2 | 3.session | Completed task «Share in Telegram Stories» and got 5000 Stars
+2024-11-12 20:16:29.56 | SUCCESS | utils.starter:start:41 | Thread 1 | 2.session | Completed task «Follow Major in Telegram» and got 1250 Stars
+2024-11-12 20:16:30.51 | WARNING | utils.starter:start:43 | Thread 0 | 1.session | Couldn't complete task «Extra Stars Purchase #1»
+2024-11-12 20:16:32.01 | SUCCESS | utils.starter:start:41 | Thread 5 | 6.session | Completed task «Share in Telegram Stories» and got 5000 Stars
+2024-11-12 20:16:32.45 | WARNING | utils.starter:start:43 | Thread 3 | 4.session | Couldn't complete task «Extra Stars Purchase #1»
+2024-11-12 20:22:55.72 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:22:55.72 | SUCCESS | utils.core.telegram:get_accounts:106 | Search available accounts: 6.
+2024-11-12 20:22:55.72 | INFO | utils.core.telegram:check_valid_accounts:85 | Checking accounts for valid...
+2024-11-12 20:22:57.96 | SUCCESS | utils.core.telegram:check_valid_accounts:95 | Valid accounts: 6; Invalid: 0
+2024-11-12 20:23:12.48 | INFO | utils.core.telegram:pars_sessions:56 | Searched sessions: 6.
+2024-11-12 20:23:12.48 | SUCCESS | utils.core.telegram:get_accounts:106 | Search available accounts: 6.
+2024-11-12 20:23:12.48 | INFO | utils.core.telegram:check_valid_accounts:85 | Checking accounts for valid...
+2024-11-12 20:23:14.46 | SUCCESS | utils.core.telegram:check_valid_accounts:95 | Valid accounts: 6; Invalid: 0
+2024-11-12 20:23:20.35 | SUCCESS | utils.major:login:175 | Thread 2 | 3.session | Login
+2024-11-12 20:23:21.13 | WARNING | utils.starter:start:29 | Thread 2 | 3.session | Couldn't join to major channel.
+2024-11-12 20:23:22.12 | SUCCESS | utils.major:login:175 | Thread 1 | 2.session | Login
+2024-11-12 20:23:22.85 | WARNING | utils.starter:start:29 | Thread 1 | 2.session | Couldn't join to major channel.

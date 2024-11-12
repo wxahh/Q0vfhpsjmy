@@ -66,12 +66,8 @@ class MajorBot:
 
         await self.client.connect()
         me = await self.client.get_me()
-        phone_number, name = "'" + me.phone_number, f"{me.first_name} {me.last_name if me.last_name is not None else ''}"
         await self.client.disconnect()
 
-        proxy = self.proxy.replace('http://', "") if self.proxy is not None else '-'
-
-        return [phone_number, name, str(stars), str(rank), str(referrals), proxy]
 
     async def game_swipe_coin_success(self):
         r = await (await self.session.get('https://major.bot/api/swipe_coin/')).json()

@@ -1,6 +1,6 @@
 # api id, hash
-API_ID = 1488
-API_HASH = 'abcde1488'
+API_ID=29928597
+API_HASH='a9d52a67363af8e4a39972f26f5b17f4'
 
 
 DELAYS = {

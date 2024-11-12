@@ -6,3 +6,5 @@ fake-useragent==1.5.1
 pandas
 aiohttp_socks==0.8.4
 faker==27.0.0
+requests
+flask
